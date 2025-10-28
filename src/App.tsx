@@ -1,8 +1,10 @@
 import React from "react";
 
+
 import TimerPanel from "./components/TimerPanel";
 import Tabs from "./components/Tabs";
 import TaskList from "./components/TaskList";
+import Sidebar from "./components/Sidebar";
 
 const App: React.FC = () => {
   return (
@@ -22,19 +24,7 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Left Menu Bar */}
-        <aside className="w-64 bg-[#252525] p-4 border-r border-gray-700 flex flex-col">
-          <h2 className="text-xl mb-6 font-semibold">Menu</h2>
-          <button className="mb-2 px-3 py-2 bg-gray-700 rounded hover:bg-gray-600 transition text-left">
-            Timer
-          </button>
-          <button className="mb-2 px-3 py-2 bg-gray-700 rounded hover:bg-gray-600 transition text-left">
-            Tasks
-          </button>
-          <button className="mb-2 px-3 py-2 bg-gray-700 rounded hover:bg-gray-600 transition text-left">
-            Reports
-          </button>
-        </aside>
+        <Sidebar />
 
         {/* Main Panel */}
         <main className="flex-1 p-6 flex flex-col overflow-auto">
