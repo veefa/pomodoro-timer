@@ -3,7 +3,7 @@ import React from "react";
 
 import TimerPanel from "./components/TimerPanel";
 import Tabs from "./components/Tabs";
-import TaskList from "./components/TaskList";
+//import TaskList from "./components/TaskList";
 import Sidebar from "./components/Sidebar";
 
 const App: React.FC = () => {
@@ -31,7 +31,7 @@ const App: React.FC = () => {
           <Tabs />
           <div className="flex flex-col md:flex-row gap-6 mt-4">
             <TimerPanel />
-            <TaskList />
+            {/* <TaskList /> */}
           </div>
         </main>
       </div>

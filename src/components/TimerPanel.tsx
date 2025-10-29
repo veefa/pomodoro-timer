@@ -17,14 +17,15 @@ const DEFAULT_SETTINGS: TimerSettings = {
   sessionsUntilLongBreak: 4,
 };
 
-export default function TimerPanel(): JSX.Element {
+const TimerPanel: React.FC = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [sessionType, setSessionType] = useState<SessionType>("focus");
   const [settings, setSettings] = useState<TimerSettings>(() => {
     try {
       const raw = localStorage.getItem("pomodoro:settings");
       return raw ? (JSON.parse(raw) as TimerSettings) : DEFAULT_SETTINGS;
-    } catch {
+    } catch (err) {
+      console.debug("Failed to load settings from localStorage:", err);
       return DEFAULT_SETTINGS;
     }
   });
@@ -45,7 +46,9 @@ export default function TimerPanel(): JSX.Element {
     // persist settings
     try {
       localStorage.setItem("pomodoro:settings", JSON.stringify(settings));
-    } catch {}
+    } catch (err) {
+      console.debug("Failed to persist settings:", err);
+    }
   }, [settings]);
 
   useEffect(() => {
@@ -79,7 +82,11 @@ export default function TimerPanel(): JSX.Element {
     const onKey = (e: KeyboardEvent) => {
       if (e.code === "Space") {
         e.preventDefault();
-        isRunning ? pauseTimer() : startTimer();
+        if (isRunning) {
+          pauseTimer();
+        } else {
+          startTimer();
+        }
       }
       if (e.key.toLowerCase() === "r") {
         resetTimer();
@@ -125,48 +132,51 @@ export default function TimerPanel(): JSX.Element {
       window.clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-    // increment completedSessions only when finishing focus
-    if (sessionRef.current === "focus") {
-      setCompletedSessions((c) => c + 1);
-    }
+
+    const focusEnded = sessionRef.current === "focus";
 
     // notification & sound
     try {
       const audio = new Audio("/notification.mp3");
-      audio.play().catch(() => {});
-    } catch {}
+      audio.play().catch((err) => {
+        console.debug("audio.play() rejected:", err);
+      });
+    } catch (err) {
+      console.debug("creating Audio failed:", err);
+    }
 
     if ("Notification" in window && Notification.permission !== "granted") {
-      Notification.requestPermission().catch(() => {});
+      Notification.requestPermission().catch((err) => {
+        console.debug("Notification.requestPermission() failed:", err);
+      });
     } else if (
       "Notification" in window &&
       Notification.permission === "granted"
     ) {
-      const nextTitle =
-        sessionRef.current === "focus" ? "Break time!" : "Focus time!";
+      const nextTitle = focusEnded ? "Break time!" : "Focus time!";
       new Notification("Pomodoro", { body: nextTitle });
     }
 
-    // compute next session
-    setTimeout(() => {
-      setSessionType((current) => {
-        let next: SessionType = "focus";
-        if (current === "focus") {
-          const newCount = completedSessions + 1 || 1;
-          next =
-            newCount % settings.sessionsUntilLongBreak === 0
-              ? "longBreak"
-              : "shortBreak";
-        } else {
-          next = "focus";
-        }
-        setTimeLeft(getTimeForSessionType(next));
-        setIsRunning(false);
-        return next;
-      });
-    }, 200); // small delay so user sees 00:00 briefly
+    // compute next session using functional updates to avoid stale state
+    setCompletedSessions((prevCompleted) => {
+      const newCompleted = focusEnded ? prevCompleted + 1 : prevCompleted;
+
+      // decide next session based on the updated completed count
+      const nextSession: SessionType = focusEnded
+        ? newCompleted % settings.sessionsUntilLongBreak === 0
+          ? "longBreak"
+          : "shortBreak"
+        : "focus";
+
+      // apply next session and reset timer
+      setSessionType(nextSession);
+      setTimeLeft(getTimeForSessionType(nextSession));
+      setIsRunning(false);
+
+      return newCompleted;
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [completedSessions, settings]);
+  }, [settings]);
 
   const formatTime = (seconds: number) => {
     const s = Math.max(0, Math.floor(seconds));
@@ -333,19 +343,15 @@ export default function TimerPanel(): JSX.Element {
       )}
     </>
   );
-}
+};
 
 /* ---------------- Settings Modal (inline) ---------------- */
 
-function SettingsModal({
-  settings,
-  onSave,
-  onClose,
-}: {
+const SettingsModal: React.FC<{
   settings: TimerSettings;
   onSave: (s: TimerSettings) => void;
   onClose: () => void;
-}) {
+}> = ({ settings, onSave, onClose }) => {
   const [local, setLocal] = useState<TimerSettings>(settings);
 
   return (
@@ -439,4 +445,6 @@ function SettingsModal({
       </div>
     </div>
   );
-}
+};
+
+export default TimerPanel;
