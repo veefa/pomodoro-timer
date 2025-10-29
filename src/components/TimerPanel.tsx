@@ -77,25 +77,6 @@ const TimerPanel: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeLeft]);
 
-  // keyboard shortcut: Space toggles start/pause
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.code === "Space") {
-        e.preventDefault();
-        if (isRunning) {
-          pauseTimer();
-        } else {
-          startTimer();
-        }
-      }
-      if (e.key.toLowerCase() === "r") {
-        resetTimer();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [isRunning]);
-
   const getTimeForSessionType = (type: SessionType) => {
     switch (type) {
       case "focus":
@@ -125,6 +106,25 @@ const TimerPanel: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [settings]
   );
+
+  // keyboard shortcut: Space toggles start/pause
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        if (isRunning) {
+          pauseTimer();
+        } else {
+          startTimer();
+        }
+      }
+      if (e.key.toLowerCase() === "r") {
+        resetTimer();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isRunning, pauseTimer, startTimer, resetTimer]);
 
   const handleSessionComplete = useCallback(() => {
     // ensure we don't double-run

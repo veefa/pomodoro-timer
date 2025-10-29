@@ -26,7 +26,7 @@ const Tabs: React.FC = () => {
       <button
         onClick={() => navigate("/tasks")}
         className={`px-3 py-1 rounded transition ${
-          currentPath === "/tasks"
+          isActive("/tasks")
             ? "bg-gray-600 text-white"
             : "bg-gray-700 text-white hover:bg-gray-600"
         }`}>

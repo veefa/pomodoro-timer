@@ -23,7 +23,7 @@ const Sidebar: React.FC = () => {
       <div className="w-16 bg-[#111] flex flex-col items-center py-3 border-r border-gray-800">
         <nav className="flex flex-col items-center gap-3 w-full">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/timer")}
             aria-label="Pomodoro"
             title="Pomodoro"
             className={`w-11 h-11 rounded-xl flex items-center justify-center transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-400 ${

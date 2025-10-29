@@ -80,7 +80,7 @@ const TaskList: React.FC = () => {
 
         <div className="flex flex-col gap-2">
           {tasks.length === 0 ? (
-            <div className="text-gray-500 text-sm h-32 flex items-center justify-center border border-dashed border-neutral-700 rounded-md p-4">
+            <div className="text-red-500 text-sm h-32 flex items-center justify-center border border-dashed border-neutral-700 rounded-md p-4">
               No tasks for this day
             </div>
           ) : (
