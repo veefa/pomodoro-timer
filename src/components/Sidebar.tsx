@@ -6,7 +6,6 @@ import {
   AiOutlineBell,
 } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
-import TaskList from "./TaskList";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
@@ -75,16 +74,18 @@ const Sidebar: React.FC = () => {
 
         <div className="mb-2">
           <button
+            onClick={() => navigate("/profile")}
             aria-label="Profile"
             title="Profile"
             className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-100 font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-400">
             <FaUser size={14} />
+
           </button>
         </div>
       </div>
 
       {/* Only show TaskList in tasks route */}
-      {isActive("/tasks") && <TaskList />}
+     
     </aside>
   );
 };
