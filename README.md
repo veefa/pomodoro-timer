@@ -26,6 +26,16 @@ Replace ./docs/screenshot.png with your actual screenshot. Optionally add multip
 - react-icons
 
 ## Usage
+- Open the app in the browser (usually http://localhost:3000).
+- Use the Sidebar to switch between Timer and Tasks.
+- In Timer:
+  - Click Start / Pause / Reset or press Space / R.
+  - Open Settings to change durations; settings persist across reloads.
+- In Tasks:
+  - Click "+ Add new task" to open the input, type a task and press Enter or click Add.
+  - Tasks are saved to localStorage.
+  
+## Usage
 - Use the Sidebar to switch between Timer and Tasks.
 - In Timer:
   - Click Start / Pause / Reset or press Space / R.
