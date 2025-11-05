@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+###### Pomodoro Timer  #######
 
-Currently, two official plugins are available:
+A simple Pomodoro-style focus timer built with React + TypeScript and Tailwind. Includes a timer panel with focus/short/long sessions, persistent settings, keyboard shortcuts, a left icon rail (sidebar) and a local task list.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Focus / Short break / Long break sessions
+- Start / Pause / Reset controls
+- Quick add minutes (+25 / +10 / +5 / +1)
+- Settings modal (durations, sessions until long break) persisted to localStorage
+- Keyboard shortcuts: Space (start/pause), R (reset)
+- Task list persisted to localStorage (add, optimistic UI, retry on failure)
+- Route-based UI with Sidebar tabs (Timer, Tasks, Calendar, Notifications)
 
-## React Compiler
+## Screenshot
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+![App screenshot](./src/assets/Screenshots/webpage.png)
 
-## Expanding the ESLint configuration
+Replace ./docs/screenshot.png with your actual screenshot. Optionally add multiple sizes or a GIF for demo.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech
+- React (FC + hooks)
+- TypeScript
+- Tailwind CSS
+- react-router-dom
+- react-icons
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Usage
+- Use the Sidebar to switch between Timer and Tasks.
+- In Timer:
+  - Click Start / Pause / Reset or press Space / R.
+  - Open Settings to change durations; settings persist across reloads.
+- In Tasks:
+  - Click "+ Add new task" to open the input, type a task and press Enter or click Add.
+  - Tasks are saved to localStorage.
