@@ -3,6 +3,9 @@
 
 A simple Pomodoro-style focus timer built with React + TypeScript and Tailwind. Includes a timer panel with focus/short/long sessions, persistent settings, keyboard shortcuts, a left icon rail (sidebar) and a local task list.
 
+## Live demo
+https://pomodorove.netlify.app/timer
+
 ## Features
 - Focus / Short break / Long break sessions
 - Start / Pause / Reset controls
@@ -34,7 +37,7 @@ Replace ./docs/screenshot.png with your actual screenshot. Optionally add multip
 - In Tasks:
   - Click "+ Add new task" to open the input, type a task and press Enter or click Add.
   - Tasks are saved to localStorage.
-  
+
 ## Usage
 - Use the Sidebar to switch between Timer and Tasks.
 - In Timer:
