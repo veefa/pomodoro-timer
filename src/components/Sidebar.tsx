@@ -48,6 +48,7 @@ const Sidebar: React.FC = () => {
           </button>
 
           <button
+          onClick={() => navigate("/calendar")}
             aria-label="Calendar"
             title="Calendar"
             className={`w-11 h-11 rounded-xl flex items-center justify-center transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-600 ${
@@ -59,6 +60,7 @@ const Sidebar: React.FC = () => {
           </button>
 
           <button
+            onClick={() => navigate("/notifications")}
             aria-label="Notifications"
             title="Notifications"
             className={`w-11 h-11 rounded-xl flex items-center justify-center transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-600 ${
@@ -67,7 +69,7 @@ const Sidebar: React.FC = () => {
                 : "text-gray-400 hover:text-white hover:bg-[#1c1c1c]"
             }`}>
             <AiOutlineBell size={20} />
-          </button>
+             </button>
         </nav>
 
         <div className="flex-1" />
